@@ -514,7 +514,7 @@ def export_ios(res_path, locale)
 end
 
 def export_swift(res_path)
-  swift_path = res_path + "R.swift"
+  swift_path = res_path + "Localized.swift"
   swift_path.delete if swift_path.exist?
 
   File.open(swift_path, 'wb') { |f|
@@ -569,21 +569,6 @@ def export_swift(res_path)
 
     f.write "}\n\n"
 
-    if not $strings_keys.empty? or not $arrays_keys.empty?
-      f.write "postfix operator ^\n\n"
-    end
-
-    if not $strings_keys.empty?
-      f.write "postfix func ^ (key: R.string) -> String {\n"
-      f.write "    return NSLocalizedString(key.rawValue, comment: \"\")\n"
-      f.write "}\n\n"
-    end
-
-    if not $arrays_keys.empty?
-      f.write "postfix func ^ (key: R.array) -> [String] {\n"
-      f.write "    return R.arrays[key.rawValue]!\n"
-      f.write "}\n\n"
-    end
   }
 end
 
