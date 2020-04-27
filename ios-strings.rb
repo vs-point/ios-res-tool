@@ -127,9 +127,9 @@ def import_android(import_path)
   Pathname.glob(import_path + 'values*/').each { |values_path|
     name = values_path.basename.to_s
 
-    #if name == 'values-en'
-    #  locale = "Base"
-    #else
+    if name == 'values'
+      locale = "Base"
+    else
       locale = name.gsub(/^values-(.+)$/, '\1').gsub(/-r/, '-')
       if locale == 'zh-TW'
         locale = 'zh-Hant'
@@ -138,7 +138,7 @@ def import_android(import_path)
       elsif locale == 'zh-CN'
         locale = 'zh-Hans'
       end
-    #end
+    end
 
     values = {
       :strings => {},
@@ -525,8 +525,8 @@ def export_swift(res_path)
     if not $strings_keys.empty?
       f.write "    enum string : String {\n"
       $strings_keys.each { |key|
-        value = lookup_locales('Base', :strings, key)
-        value = export_ios_string('Base', value)
+        value = lookup_locales('en', :strings, key)
+        value = export_ios_string('en', value)
         f.write "        /// #{value}\n"
         f.write "        case #{key}\n"
       }
