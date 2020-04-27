@@ -127,7 +127,7 @@ def import_android(import_path)
   Pathname.glob(import_path + 'values*/').each { |values_path|
     name = values_path.basename.to_s
 
-    if name == 'values'
+    if name == 'values-en'
       locale = "Base"
     else
       locale = name.gsub(/^values-(.+)$/, '\1').gsub(/-r/, '-')
